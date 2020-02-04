@@ -8,18 +8,21 @@ import java.util.Random;
 public class main {
 	public static void main(String[] args) {
 		long time1 = System.currentTimeMillis();
-		RabinMillerTest test = new RabinMillerTest();
-		Random rand = new Random();
+		int primesDesired = 1; //Only set to 1 for development and testing. See assignment. TODO
 		int numberOfPrimes = 0;
-		while (numberOfPrimes < 2) {
+		Random rand = new Random();
+		RabinMillerTest test = new RabinMillerTest();
+		BigInteger[] primes = new BigInteger[primesDesired]; 
+		while (numberOfPrimes < primesDesired) { 
 			BigInteger number = new BigInteger(512, rand);
 			
-			if (test.runTest(number, 20)) { //Where 20 is the number of runs.
+			if (test.runTest(number, 20)) { //Where 20 is the number of runs as per assignment. set to 1 for testing. TODO
+				primes[numberOfPrimes] = number;
 				numberOfPrimes++;
-				System.out.println("Number of primes found: " + numberOfPrimes);
 			}
 		}
 		long time2 = System.currentTimeMillis();
+		System.out.println("Number of primes found: " + numberOfPrimes);
 		System.out.println("Computation took " + (time2-time1) + " milliseconds.");
 		System.exit(0);
 	}
