@@ -25,7 +25,7 @@ public class RabinMillerTest {
 			BigInteger toFactor = nbrToTest.subtract(ONE);
 			s = toFactor;
 			r = ZERO;
-			System.out.println("Converts input to (2^r) * d + 1");
+			//System.out.println("Converts input to (2^r) * d + 1");
 			while (s.mod(TWO).equals(ZERO)) {
 				r = r.add(ONE);
 				s = s.divide(TWO);
@@ -35,7 +35,7 @@ public class RabinMillerTest {
 		//Fills a set with random numbers 2 < a < n - 2
 		Random rand = new Random();
 		BigInteger[] randomAs = new BigInteger[times];
-		System.out.println("Generating random A:s");
+		//System.out.println("Generating random A:s");
 		for (int i = 0; i != times; ++i) {
 			BigInteger current = new BigInteger(nbrToTest.subtract(TWO).bitLength(), rand);
 			while ((current.compareTo(nbrToTest.subtract(TWO)) > 0) && current.compareTo(TWO) > 0) { //As the random generator cannot accept a upper bound.
@@ -45,7 +45,7 @@ public class RabinMillerTest {
 		}
 		
 		//Runs the test "times" times, with the set of random numbers.
-		System.out.println("Starting algorithm.");
+		//System.out.println("Starting algorithm.");
 		for (int t=0; t!=times; ++t) {
 			if (!run(nbrToTest, randomAs[t])) { 	 //If run says that nbrToTest is prime in respect to the random number returned from pollfirst,
 															//rerun with new random until set is empty. If run says nbrToTest is a composite, return false.
@@ -53,7 +53,7 @@ public class RabinMillerTest {
 				return false;						
 			}
 		}
-		System.out.println("Number is probably prime: " + nbrToTest);
+		//System.out.println("Number is probably prime: " + nbrToTest);
 		return true;
 	}
 
@@ -63,7 +63,7 @@ public class RabinMillerTest {
 		if (x.compareTo(ONE) == 0 || x.compareTo(n.subtract(ONE)) == 0) {
 			return true; // Probably Prime.
 		}
-		System.out.println("Testing primality.");
+		//System.out.println("Testing primality.");
 		for (BigInteger j = ONE; j.compareTo(r.subtract(ONE)) < 0; j = j.add(ONE)) {
 			// x = a.modPow(TWO.pow(j).multiply(s), n); //Where does j come from? TODO
 			x = x.modPow(x, n);
