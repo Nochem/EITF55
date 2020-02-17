@@ -1,20 +1,22 @@
-package RSAProject;
+
 
 import java.math.BigInteger;
 import java.util.Random;
 
+
 //import java.util.Scanner;
 
 public class main {
-	public static void runRabinMiller() {
-		int primesDesired = 100; //Only set to 1 for development and testing. See assignment. TODO
+	
+	public static void runRabinMiller(timekeeping time) {
+		int primesDesired = 1; //Only set to 1 for development and testing. See assignment. TODO
 		int numberOfPrimes = 0, notPrimes = 0;
 		Random rand = new Random();
 		RabinMillerTest test = new RabinMillerTest();
 		BigInteger[] primes = new BigInteger[primesDesired]; 
 		while (numberOfPrimes < primesDesired) { 
 			BigInteger number = new BigInteger(2048, rand);
-			if (test.runTest(number, 20)) { //Where 20 is the number of runs as per assignment. set to 1 for testing. TODO
+			if (test.runTest(number, 20, time)) { //Where 20 is the number of runs as per assignment. set to 1 for testing. TODO
 				primes[numberOfPrimes] = number;
 				++numberOfPrimes;
 			} else {
@@ -37,9 +39,37 @@ public class main {
 	
 	public static void main(String[] args) {
 		long time1 = System.currentTimeMillis();
-		//runRabinMiller();
-		runSimpleEuclidan();
+		main.timekeeping time = new main.timekeeping();
+		runRabinMiller(time);
+		//runSimpleEuclidan();
 		long time2 = System.currentTimeMillis();
-		System.out.println("Computation took " + (time2-time1) + " milliseconds.");
+		long timeTaken = time2-time1;
+		System.out.println("Computation took " + timeTaken + " milliseconds.");
+		long convertinput = time.convertInputEnd-time.convertInputStart;
+		long randomAGeneration = time.randomAGenerationEnd - time.randomAGenerationStart;
+		System.out.println("Out of which " + convertinput + " was spent on converting input into into the form (2^r) * d + 1.");
+		System.out.println("And out of which " + randomAGeneration + " was spent on generating random A:s.");
+		System.out.println(time.convertInputEnd);
+		System.out.println(time.convertInputStart);
+		System.out.println(time.testingEnd-time.testingStart);
+		
+	}
+	
+	public static class timekeeping {
+		public long convertInputStart, convertInputEnd, randomAGenerationStart, randomAGenerationEnd, testingStart, testingEnd;
+		public timekeeping() {}
+		public void setConvertInputStart(long time) {
+			convertInputStart = time;
+		}
+		public void setConvertInputEnd(long time) { 
+			convertInputEnd = time;
+		}
+		public void setRandomAGenerationStart(long time) { 
+			randomAGenerationStart = time;
+		}
+		public void setRandomAGenerationEnd(long time) { 
+			randomAGenerationEnd = time;
+		}
+	
 	}
 }

@@ -1,4 +1,3 @@
-package RSAProject;
 
 import java.math.BigInteger;
 import java.util.Random;
@@ -21,8 +20,10 @@ public SimpleEuclidean(BigInteger a, BigInteger m) {
 			m = a.mod(m);
 			a = t;
 		}
-		return a;
+		System.out.println(a.toString());
+		//return a;
 	}
+}
 	
 /*
 	public SimpleEuclidean(BigInteger p, BigInteger q) {
