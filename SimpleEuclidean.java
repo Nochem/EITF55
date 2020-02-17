@@ -6,7 +6,25 @@ import java.util.Random;
 public class SimpleEuclidean {
 	private static final BigInteger ONE = BigInteger.ONE;
 	private static final BigInteger ZERO = BigInteger.ZERO;
+
+public SimpleEuclidean(BigInteger a, BigInteger m) {
+		BigInteger t; // m, a, d, d1, d2, v, v1, v2, t1, t2, t3;	
+		//m = p.subt1ract(ONE).multiply(q.subtract(ONE));
+		/*Random rand = new Random();
+		a = new BigInteger(512, rand);
+		d1 = m;
+		d2 = a;
+		v1 = ZERO;
+		v2 = ONE;*/
+		while (!m.equals(ZERO)) {
+			t = m;
+			m = a.mod(m);
+			a = t;
+		}
+		return a;
+	}
 	
+/*
 	public SimpleEuclidean(BigInteger p, BigInteger q) {
 		BigInteger s, t, m, a, d, d1, d2, v, v1, v2, t1, t2, t3;
 		m = p.subtract(ONE).multiply(q.subtract(ONE));
