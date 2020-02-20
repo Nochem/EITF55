@@ -11,6 +11,7 @@ public class RabinMillerTest {
 	
 
 	public RabinMillerTest() {
+		System.out.println("Object created at: " + System.currentTimeMillis());
 	}
 
 	/*
@@ -63,6 +64,7 @@ public class RabinMillerTest {
 		}
 		//System.out.println("Number is probably prime: " + nbrToTest);
 		time.testingEnd = System.currentTimeMillis();
+		System.out.println("Finished testing time: " +System.currentTimeMillis());
 		return true;
 	}
 
@@ -74,8 +76,8 @@ public class RabinMillerTest {
 		}
 		//System.out.println("Testing primality.");
 		for (BigInteger j = ONE; j.compareTo(r.subtract(ONE)) < 0; j = j.add(ONE)) {
-			// x = a.modPow(TWO.pow(j).multiply(s), n); //Where does j come from? TODO
-			x = x.modPow(x, n);
+			x = a.modPow(TWO.pow(j.intValue()).multiply(s), n);
+			//x = x.modPow(x, n);
 			if (x.equals(ONE)) {
 				return false;
 			}
