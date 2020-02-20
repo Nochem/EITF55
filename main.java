@@ -1,22 +1,27 @@
-package RSAProject;
+
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.ArrayList;
 
 //import java.util.Scanner;
 
 public class main {
-	public static void runRabinMiller() {
-		int primesDesired = 100; //Only set to 1 for development and testing. See assignment. TODO
+	
+	public static void runRabinMiller(ArrayList<timekeeping> timekeeper) {
+		int primesDesired = 1; //Only set to 1 for development and testing. See assignment. TODO
 		int numberOfPrimes = 0, notPrimes = 0;
 		Random rand = new Random();
 		RabinMillerTest test = new RabinMillerTest();
 		BigInteger[] primes = new BigInteger[primesDesired]; 
 		while (numberOfPrimes < primesDesired) { 
 			BigInteger number = new BigInteger(2048, rand);
-			if (test.runTest(number, 20)) { //Where 20 is the number of runs as per assignment. set to 1 for testing. TODO
+			main.timekeeping time = new main.timekeeping();
+			timekeeper.add(time);
+			if (test.runTest(number, 20, time)) { //Where 20 is the number of runs as per assignment. set to 1 for testing. TODO
 				primes[numberOfPrimes] = number;
 				++numberOfPrimes;
+				//This is the issue with the timetest! TODO (Timevalues are being overwritten for each number tested.)
 			} else {
 				++notPrimes;
 			}
@@ -37,9 +42,41 @@ public class main {
 	
 	public static void main(String[] args) {
 		long time1 = System.currentTimeMillis();
-		//runRabinMiller();
-		runSimpleEuclidan();
+		ArrayList<timekeeping> timekeeper = new ArrayList<timekeeping>();
+		runRabinMiller(timekeeper);
+		//runSimpleEuclidan();
 		long time2 = System.currentTimeMillis();
-		System.out.println("Computation took " + (time2-time1) + " milliseconds.");
+		long timeTaken = time2-time1;
+		System.out.println("Computation took " + timeTaken + " milliseconds in total.");
+		long convertinput = 0, randomAGeneration = 0, testing = 0;
+		for (int i = 0; i != timekeeper.size(); ++i) {
+			convertinput += timekeeper.get(i).convertInputEnd - timekeeper.get(i).convertInputStart;
+			randomAGeneration += timekeeper.get(i).randomAGenerationEnd - timekeeper.get(i).randomAGenerationStart;
+			testing += timekeeper.get(i).testingEnd - timekeeper.get(i).testingStart;
+		}
+		
+		
+		System.out.println("Out of which " + convertinput + " was spent on converting input into into the form (2^r) * d + 1.");
+		System.out.println("And out of which " + randomAGeneration + " was spent on generating random A:s.");
+		System.out.println("Finally, " + testing + " was spent on testing the numbers for primality.");
+		
+	}
+	
+	public static class timekeeping {
+		public long convertInputStart, convertInputEnd, randomAGenerationStart, randomAGenerationEnd, testingStart, testingEnd;
+		public timekeeping() {}
+		public void setConvertInputStart(long time) {
+			convertInputStart = time;
+		}
+		public void setConvertInputEnd(long time) { 
+			convertInputEnd = time;
+		}
+		public void setRandomAGenerationStart(long time) { 
+			randomAGenerationStart = time;
+		}
+		public void setRandomAGenerationEnd(long time) { 
+			randomAGenerationEnd = time;
+		}
+	
 	}
 }
