@@ -44,7 +44,7 @@ public class RabinMillerTest {
 		time.randomAGenerationStart = System.currentTimeMillis();
 		for (int i = 0; i != times; ++i) {
 			BigInteger current = new BigInteger(nbrToTest.subtract(TWO).bitLength(), rand);
-			while ((current.compareTo(nbrToTest.subtract(TWO)) > 0) && current.compareTo(TWO) > 0) { //As the random generator cannot accept a upper bound.
+			while ((current.compareTo(nbrToTest.subtract(TWO)) > 0) || current.compareTo(TWO) < 0) { //As the random generator cannot accept a upper bound.
 				current = new BigInteger(nbrToTest.subtract(TWO).bitLength(), rand);
 			}
 			randomAs[i] = current;
